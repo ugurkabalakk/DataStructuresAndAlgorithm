@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DataStructuresAndAlgorithm
@@ -298,6 +299,67 @@ namespace DataStructuresAndAlgorithm
             }
 
             int result = maxSoFar;
+        }
+
+        public static void ArrayMinJumpToEndOfArray(int[] nums)
+        {
+            //Given an array of non - negative integers nums,
+            //you are initially positioned at the first index of the array.
+
+            //Each element in the array represents your maximum jump length at that position.
+            //Your goal is to reach the last index in the minimum number of jumps.
+            //You can assume that you can always reach the last index.
+            int jumps = 0;
+            int nextMaxPosition = 0, currentMaxPosition = 0;
+
+            for (int i = 0; i < nums.Length - 1; i++)
+            {
+                int current = nums[i] + i;
+                nextMaxPosition = Math.Max(current, nextMaxPosition);
+                if (i == currentMaxPosition)
+                {
+                    jumps++;
+                    currentMaxPosition = nextMaxPosition;
+                }
+            }
+            var result = jumps;
+        }
+        public static void ArrayCanJumpToEndOfArray(int[] nums)
+        {
+            //Index   0   1   2   3   4   5   6
+            //nums    9   4   2   1   0   2   0
+            //memo    U   G   B   B   B   G   G
+            int lastGoodIndexPosition = nums.Length - 1;
+
+            for (int i = nums.Length - 1; i >= 0; i--)
+            {
+                if (i + nums[i] >= lastGoodIndexPosition)
+                {
+                    lastGoodIndexPosition = i;
+                }
+            }
+
+            var result = lastGoodIndexPosition == 0;
+
+        }
+        public static void ArrayPartitionArrayIntoDisjointIntervals(int[] nums)
+        {
+            int splitIndex = 0,
+                maxAtSplitIndexValue = nums[0],
+                maxSoFar = nums[0];
+
+            for (int i = 0; i < nums.Length ; i++)
+            {
+                if (nums[i] < maxAtSplitIndexValue)
+                {
+                    splitIndex = i;
+                    maxAtSplitIndex = maxSoFar;
+                }
+
+                maxSoFar = Math.Max(maxSoFar, nums[i]);
+            }
+
+            int result = splitIndex + 1;
         }
     }
 }
